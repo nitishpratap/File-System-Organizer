@@ -33,6 +33,20 @@ let commond = process.argv.slice(2)[0]
 
 let inputArr = process.argv.slice(3);
 let srcPath = inputArr[0];
+ console.log(srcPath)
+let x = fs.readdirSync(srcPath)
+let found = false;
+for(let i=0;i<x.length;i++){
+    if(x[i]=='organize-files'){
+        found =true;
+        break;
+    }
+
+}
+if(found==false){
+    folderCreatePromise =  fs.mkdirSync("organize-files");
+}
+
 if(commond=="organize"){
 // console.log(srcPath)
 function createFolder(srcPath){
@@ -41,24 +55,7 @@ if(srcPath==undefined){
     return;
     
 }
-else{
-    let doesExist = fs.existsSync(srcPath.toString());
-    if(doesExist==true){
-        organize_files = path.join(srcPath.toString(),"organize_files");
-        // console.log(organize_files);
-        if(fs.existsSync(organize_files)){
-            console.log("Folder already created");
-            return;
-        }
-        else{
-           folderCreatePromise =  fs.promises.mkdir("organize-files");
-           
-        }
-    }
-    else{
-        console.log("Enter valid path")
-    }
-}
+
 }
 let folderDetail = fs.promises.readdir(inputArr[0]);
 folderDetail.then(function(FolderData){
